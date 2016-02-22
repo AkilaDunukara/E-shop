@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -29,7 +30,7 @@ class ItemController extends Controller
 
     public function getTopItemsByCategory(){
 
-        $category_id = $_GET['category_id']; error_reporting(E_ALL);
+        $category_id = $_GET['category_id']; 
         $item = new Item();
         $items = $item->getTopItemsByCategory($category_id);
 
@@ -82,6 +83,65 @@ class ItemController extends Controller
 
         return view('items.showitem')->with('item',$item_data[0]);
 
+    }
+    /**
+     * Add item to shopping cart
+     */
+    public function addToCart(Request $request){
+
+        $item_id = $_GET['item_id'];
+        
+        $item_cart = $request->cookie('item_cart'); //print_r($item_cart);
+        $item = new Item();
+        $item_data = $item->getById($item_id);     
+ 
+        $response  = new Response(view('includes.header'));
+
+        $new_item = true;
+        for ($i=0; $i<count($item_cart['items']); $i++) {
+            $_item = $item_cart['items'][$i];
+            if($item_id==$_item['item_id']){//item already in the cart.increase quantity
+                $_item['quantity'] += 1;
+                $_item['sub_total'] = Item::displayPrice($_item['quantity']*$item_data[0]['price']);
+                $new_item = false;
+                $item_cart['items'][$i] = $_item;//assign updated item into item cart array
+            }
+        }
+        if($new_item){
+           $item_cart['items'][] = array('item_id'=>$item_data[0]['item_id'],'quantity'=>1,'price'=>$item_data[0]['price'],'name'=>$item_data[0]['item_name'],'display_price'=>Item::displayPrice($item_data[0]['price']), 'sub_total'=>Item::displayPrice($item_data[0]['price']));
+        }
+
+        $item_cart = Item::addTotalAmount($item_cart);
+
+        $response->withCookie('item_cart', $item_cart, 1800000);
+        
+        $output =[
+            'status'=>200,
+            'message'=>'Items found',
+            'cart'=>$item_cart
+        ];
+        return $response;
+
+    }
+
+    public function removeFromCart(Request $request){
+
+        echo $array_index = $_GET['array_index'];
+        $item_cart = $request->cookie('item_cart'); //print_r($item_cart);
+
+        unset($item_cart['items'][$array_index]); 
+        $item_cart['items'] = array_values($item_cart['items']);
+        $item_cart = Item::addTotalAmount($item_cart); //print_r($item_cart);
+
+        
+        $response  = new Response(view('includes.header'));
+        $response->withCookie('item_cart', $item_cart, 1800000);
+        return $response;
+    }
+
+    public function showCart(Request $request){
+        $item_cart = $request->cookie('item_cart');
+        return view('items.cart')->with('item_cart',$item_cart);
     }
     /**
      * Show the form for creating a new resource.

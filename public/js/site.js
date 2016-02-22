@@ -96,11 +96,39 @@ function itemTmeplate(itemList){
 		_html +='<div class="product-desc">';	  
 		_html +='<h4>'+item.short_description+'</h4>';		  
 		_html +='<strong class="price">'+item.price+'</strong>';	
-		_html +='<a class="button-sm">Add To Cart</a>';			
+		_html +='<a class="button-sm" href="javascript:;" onclick="addToCart('+item.item_id+')">Add To Cart</a>';			
 		_html +='</div></div>';		    
 		_html +='</li>';	
 	};
 	
 	$("#items_list").html(_html);       										
 									
+}
+
+function addToCart(item_id){
+
+	$.ajax({
+		method: 'GET',
+		url : '/addtocart/{item_id}',
+		data: {item_id : item_id},
+		type:"JSON",
+		success: function(data){
+			location.reload();
+		}
+	});
+}
+
+function removeFromCart(array_index){
+
+	$.ajax({
+		method: 'GET',
+		url : '/removefromcart/{array_index}',
+		data: {array_index : array_index},
+		type:"JSON",
+		success: function(data){
+			//console.log(data);
+			location.reload();
+		}
+	});
+		
 }

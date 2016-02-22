@@ -22,7 +22,17 @@ class Item extends Model
      * Get Selected Item by ID
      * @param $id integere
      */
-      public function getByItemName($item_name){
+
+     public function getById($item_id){
+    	$item = DB::table($this->table)
+    				->where('id','=',$item_id)
+    				->get();
+
+    	//simple join query
+    	return Item::formatData($item);  
+    }
+
+    public function getByItemName($item_name){
     	$item = DB::table($this->table)
     				->where('name','=',$item_name)
     				->get();
@@ -52,7 +62,7 @@ class Item extends Model
     			'item_name'=>$item->name,
     			'description'=>$item->description,
                 'short_description'=>$item->short_description,
-    			'price'=>$item->price
+    			'price'=>(double)$item->price
     		];
     		$_temp_item_data_set[] = $_item;
     	}
@@ -63,4 +73,17 @@ class Item extends Model
     	return "$ ".$price;
     }
 
+    public static function addTotalAmount($item_cart){
+
+        $_total = 0;
+        $_quantity = 0;
+    	foreach ($item_cart['items'] as $_item) {
+            $_total += $_item['price']*$_item['quantity'];
+            $_quantity += $_item['quantity'];
+        }
+        $item_cart['total'] = Item::displayPrice($_total);
+        $item_cart['quantity'] = $_quantity;
+
+        return $item_cart;
+    }
 }

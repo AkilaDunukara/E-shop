@@ -1,14 +1,24 @@
 <!-- Header -->	
+<?php
+$item_cart = Request::cookie('item_cart');
+if(!empty($item_cart)){
+	$quantity = $item_cart['quantity'];
+	$total = $item_cart['total'];
+}else{
+	$quantity = 0;
+	$total = "$ 0.00";
+}
+?>
 	<div id="header">
 		<h1 id="logo"><a href="#"><img src="{{URL::to('css/images/logo.gif')}}"></a></h1>	
 		
 		<!-- Cart -->
 		<div id="cart">
-			<a href="#" class="cart-link">Your Shopping Cart</a>
+			<a href="/cart" class="cart-link">Your Shopping Cart</a>
 			<div class="cl">&nbsp;</div>
-			<span>Articles: <strong>4</strong></span>
+			<span id="cart-quantity">Articles: <strong><?php echo $quantity; ?></strong></span>
 			&nbsp;&nbsp;
-			<span>Cost: <strong>$250.99</strong></span>
+			<span id="cart-total">Cost: <strong><?php echo $total; ?></strong></span>
 		</div>
 		<!-- End Cart -->
 		

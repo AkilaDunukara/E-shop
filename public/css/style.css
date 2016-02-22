@@ -17,6 +17,9 @@ a:hover { color:#666; text-decoration: none; }
 
 .left, .alignleft { float:left; display:inline; }
 .right, .alignright { float:right; display:inline; }
+.text-center {text-align: center;}
+.text-right {text-align: right;}
+.text-left {text-align: left;}
 
 .cl { font-size:0; line-height:0; clear:both; display:block; height:0; }
 
@@ -161,3 +164,13 @@ h1.item-title,h1.item-price{ margin: 10px 0; color:#A80303;}
 #footer a{ color:#7b7b7b; text-decoration: none;}
 #footer a:hover{ color:#000;}
 #footer span{ padding:0 2px;}
+
+.table{
+	border-collapse: collapse;
+	border:none;
+}
+.table tr.first-row th{ padding: 5px; background-color: #A80303;color: #fff; font-size: 14px}
+.table tbody td{ padding: 10px; border-bottom: 1px solid #ccc}
+.table tbody td span{ font-size: 14px}
+.table tbody td span.remove a{ font-size: 14px;font-weight: bold; color: #A80303; text-decoration: none;}
+.table tr.last-row td{padding-top:20px;border-bottom: none;}

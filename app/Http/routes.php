@@ -24,4 +24,6 @@ Route::get('/contact', function () {
 
 Route::get('/showproducts/{category_id}','ItemController@getTopItemsByCategory');
 Route::get('/item/{item_name}','ItemController@getByItemName');
-
+Route::get('/addtocart/{item_id}','ItemController@addToCart');
+Route::get('/removefromcart/{array_index}','ItemController@removeFromCart');
+Route::get('/cart','ItemController@showCart');

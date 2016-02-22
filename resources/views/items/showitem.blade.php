@@ -15,7 +15,7 @@
 
 			<br><br>
 
-			<a class="button xl danger">Add To Cart</a>
+			<a class="button xl danger" href="javascript:;" onclick="addToCart({{$item['item_id']}})">Add To Cart</a>
 		</div>
 		<!-- End Content -->
 		
