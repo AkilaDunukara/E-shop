@@ -59,4 +59,8 @@ class Item extends Model
     	return $_temp_item_data_set;
     }
 
+    public static function displayPrice($price){
+    	return "$ ".$price;
+    }
+
 }

@@ -40,6 +40,7 @@ class ItemController extends Controller
                 $default_image = $image->getDefaultImageByItem($_item['item_id']);
                 $_item['default_image'] = $default_image[0]['image_name'];
                 $_item['short_description'] = substr($_item['short_description'], 0,50)."...";
+                $_item['price'] = Item::displayPrice($_item['price']);
                 $_tmp_item_array[] = $_item;
             }
             $items = $_tmp_item_array;
@@ -76,6 +77,7 @@ class ItemController extends Controller
                 $images = array_values($images);//reset array values
             }
         }
+        $item_data[0]['price']  = Item::displayPrice($item_data[0]['price']);
         $item_data[0]['images'] = $images;
 
         return view('items.showitem')->with('item',$item_data[0]);
