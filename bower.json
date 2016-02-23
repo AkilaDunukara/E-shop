@@ -1,0 +1,14 @@
+{
+  "name": "Bower",
+  "version": "1.0.0",
+  "authors": [
+    "Piusha Kalyana <me@piusha.com>",
+    "Test"
+  ],
+  "directory" : "public",
+  "dependencies": {
+    
+    "bootstrap": "~3.0.0",
+    "jquery": "~2.0.3"
+  }
+}
