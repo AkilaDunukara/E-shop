@@ -35,11 +35,8 @@ class ItemController extends Controller
         $items = $item->getTopItemsByCategory($category_id);
 
         if(count($items) > 0){
-            $image = new Image();
             $_tmp_item_array = array();
             foreach ($items as $_item) {
-                $default_image = $image->getDefaultImageByItem($_item['item_id']);
-                $_item['default_image'] = $default_image[0]['image_name'];
                 $_item['short_description'] = substr($_item['short_description'], 0,50)."...";
                 $_item['price'] = Item::displayPrice($_item['price']);
                 $_tmp_item_array[] = $_item;
@@ -142,6 +139,36 @@ class ItemController extends Controller
     public function showCart(Request $request){
         $item_cart = $request->cookie('item_cart');
         return view('items.cart')->with('item_cart',$item_cart);
+    }
+
+    public function showStore(){
+
+        $_item = new Item();
+        $items = $_item->getAllItems();
+
+        $result = [];
+        foreach($items as $item){
+
+            $_item =[
+                'item_id'=>$item->id,
+                'category_id'=>$item->category_id,
+                'item_name'=>ucwords($item->name),
+                'description'=>$item->description,
+                'short_description'=>substr($item->short_description,0,40).'...',
+                'price'=>Item::displayPrice($item->price),
+                'default_image'=>$item->image_name
+            ];
+            $category = ucwords($item->category_name);
+            if (isset($result[$category])) {
+               $result[$category][] = $_item;
+            } else {
+               $result[$category] = array($_item);
+            }
+ 
+        }
+        // echo "<pre>";
+        // print_r($result);
+        return view('items.store')->with('items',$result);
     }
     /**
      * Show the form for creating a new resource.

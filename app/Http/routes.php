@@ -21,6 +21,8 @@ Route::get('/myaccount', function () {
 Route::get('/contact', function () {
     return view('items.contact');
 });
+Route::get('/store','ItemController@showStore');
+
 
 Route::get('/showproducts/{category_id}','ItemController@getTopItemsByCategory');
 Route::get('/item/{item_name}','ItemController@getByItemName');

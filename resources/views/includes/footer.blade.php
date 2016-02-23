@@ -1,15 +1,15 @@
 <!-- Footer -->
 	<div id="footer">
 		<p class="left">
-			<a href="#">Home</a>
+			<a href="/">Home</a>
 			<span>|</span>
-			<a href="#">Support</a>
+			<a href="/support">Support</a>
 			<span>|</span>
-			<a href="#">My Account</a>
+			<a href="/myaccount">My Account</a>
 			<span>|</span>
-			<a href="#">The Store</a>
+			<a href="/store">The Store</a>
 			<span>|</span>
-			<a href="#">Contact</a>
+			<a href="/contact">Contact</a>
 		</p>
 		<p class="right">
 				</p>

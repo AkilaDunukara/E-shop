@@ -2,5 +2,10 @@
 @section('title','Contact Us')
 @section('content')
 
-<h2>Contact us!</h2>
+<div id="main">
+		<div class="cl">&nbsp;</div>
+		<br/><br/>
+		<h1 class="item-title">Contact Us</h1>
+		<br><br>
+</div>
 @endsection

@@ -45,10 +45,24 @@ class Item extends Model
 
         $items = DB::table($this->table)
                     ->where('category_id',$category_id)
+                    ->join('images',$this->table.'.id','=','images.item_id')
+	   				->where('images.default_image','=','1')
                     ->skip(0)
                     ->take(3)
-                    ->get();
+        			->select('images.name AS default_image',$this->table.'.*')
+                   ->get();
         return Item::formatData($items);  
+    }
+
+    public function getAllItems(){
+    	$items = DB::table($this->table)
+	   				->join('categories',$this->table.'.category_id','=','categories.id')
+	   				->join('images',$this->table.'.id','=','images.item_id')
+	   				->where('images.default_image','=','1')
+	   				->orderBy('category_id', 'asc')
+       				->select('categories.name AS category_name','images.name AS image_name',$this->table.'.*')
+  					->get();
+    	return $items;
     }
     /**
      * Format Item data set 
@@ -64,6 +78,9 @@ class Item extends Model
                 'short_description'=>$item->short_description,
     			'price'=>(double)$item->price
     		];
+    		if(isset($item->default_image)){
+    			$_item['default_image'] = $item->default_image;
+    		}
     		$_temp_item_data_set[] = $_item;
     	}
     	return $_temp_item_data_set;

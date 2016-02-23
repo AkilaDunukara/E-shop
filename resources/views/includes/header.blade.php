@@ -28,7 +28,7 @@ if(!empty($item_cart)){
 			    <li><a href="/">Home</a></li>
 			    <li><a href="/support">Support</a></li>
 			    <li><a href="/myaccount">My Account</a></li>
-			    <li><a href="#">The Store</a></li>
+			    <li><a href="/store">The Store</a></li>
 			    <li><a href="/contact">Contact</a></li>
 			</ul>
 		</div>
